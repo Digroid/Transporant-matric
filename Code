@@ -1,0 +1,64 @@
+#include"pch.h"
+#include<iostream>
+#include<string>
+using namespace std;
+int q = 1;
+int ** createarr(size_t a, size_t b) {
+	int **m = new int *[a];
+	m[0] = new int[a*b];
+	for (size_t i = 1; i != a; ++i)
+		m[i] = m[i - 1] + b;
+	return m;
+}
+void fillarr(int **m, size_t a, size_t b) {
+	for (int k = 0; k < a; k++) {
+		for (int l = 0; l < b; l++) {
+			m[k][l]=q;
+			q++;
+		}
+		q = 1;
+	}
+}
+void printarr(int** m, size_t a, size_t b)
+	{
+		for (int i = 0; i < a; i++)
+		{
+			for (int j = 0; j < b; j++)
+			{
+				cout << m[i][j] << " ";
+			}
+			cout << endl;
+		}
+}
+void transp(int **m, int **n, size_t a, size_t b) {
+	for (int k = 0; k < a; k++) {
+		for (int l = 0; l < b; l++) {
+			n[l][k]=m[k][l];
+		}
+	}
+}
+void delarr(int **m, size_t a, size_t b) {
+	delete[] m[0];
+	delete[] m;
+}
+int main() {
+	int c, r;
+	cout << "Rows "<<endl;
+	cin >> r;
+	cout << "Cols " << endl;
+	cin >> c;
+	int **a1 = createarr(r, c);
+	int **a2 = createarr(c, r);
+	fillarr(a1, r, c);
+	fillarr(a2, c, r);
+	cout <<"Matrica 1"<< endl; 
+	printarr(a1, r, c);
+	cout <<"Matrica 2"<< endl;
+	printarr(a2, c, r);
+	transp(a1, a2, r, c);
+	cout <<"Matrica 1 Transp"<< endl;
+	printarr(a2, c, r);
+	
+	delarr(a1, r, c);
+	delarr(a2, c, r);
+}
